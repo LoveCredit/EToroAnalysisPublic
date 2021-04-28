@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+import static java.util.Objects.isNull;
+
 public class EToroAnalysis {
 
     static EToroAnalysis instance = null;
@@ -20,13 +22,19 @@ public class EToroAnalysis {
     }
 
     public static void main(String[] args) throws Exception {
-        EToroAnalysis.getInstance().calculateShares();
+        // Enter your xml file here; Example: C:/etorofile.xlsx
+        String eToroFile = null;
+        if (args.length > 0) {
+            EToroAnalysis.getInstance().calculateShares(args[0]);
+        } else if (!isNull(eToroFile)) {
+            EToroAnalysis.getInstance().calculateShares(eToroFile);
+        } else {
+            System.out.println("You should provide a file");
+        }
     }
 
-    public void calculateShares() throws Exception {
-        // Enter your xml file here
-        FileInputStream inputStream = new FileInputStream(
-"");
+    public void calculateShares(String file) throws Exception {
+        FileInputStream inputStream = new FileInputStream(file);
 
         // Get the workbook instance for XLS file
         XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
